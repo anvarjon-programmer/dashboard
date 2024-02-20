@@ -23,7 +23,9 @@ export default function RootLayout({
       </div>
         <div className={styles.content}>
           <Navbar/>
+          <div className={styles.children} style={{padding:"25px"}}>
            {children}
+          </div>
         </div>
     </div>
   );
