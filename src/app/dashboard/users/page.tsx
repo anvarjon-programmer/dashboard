@@ -1,12 +1,14 @@
 import React from 'react'
 import styles from "@/app/ui/dashboard/users/users.module.css"
 import Link from 'next/link'
-import { FaUser } from "react-icons/fa";
 import Search from '@/app/ui/dashboard/search/search';
 import Pagination from '../pagination/pagination';
 import Image from 'next/image';
-
-export default function Users() {
+import { fetchUser } from '@/app/lib/data';
+export default async function Users({searchParams}:{searchParams:{q:string}}) {
+  const q = searchParams?.q || ""
+  const users = await fetchUser(q)
+  console.log(users);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -17,7 +19,6 @@ export default function Users() {
           </button>
         </Link>
       </div>
-
           <table className={styles.table}>
             <thead>
             <tr>
@@ -30,25 +31,30 @@ export default function Users() {
             </tr>
             </thead>
             <tbody>
-              <tr>
+              {
+                users?.map((user)=>(
+              <tr key={user._id}>
                 <td>
                   <div className={styles.user}>
-                  <Image src="/noavatar.png" alt='user' width={40} height={40}/>
+                  <Image src={user.img || "/noavatar.png"} alt='user' width={40} height={40}/>
+                  {user?.usernmae}
                   </div>
                 </td>
-                <td>john@gmail.com</td>
-                <td>19.02.2024</td>
-                <td>Admin</td>
-                <td>active</td>
+                <td>{user.email}</td>
+                <td>{user?.createdAt?.toString().slice(4,16)}</td>
+                <td>{user?.isAdmin ? "admin" :"Client"}</td>
+                <td>{user?.isActive ? 'Active' : 'Passive'}</td>
                 <td>
                   <div className={styles.buttons}>
-                    <Link href={`/dashboard/users/1`}>
+                    <Link href={`/dashboard/users/${user._id}`}>
                       <button className={`${styles.button} ${styles.view}`}>view</button>
                     </Link>
                     <button className={`${styles.button} ${styles.delete}`}>delet</button>
                   </div>
                 </td>
               </tr>
+              ))
+            }
             </tbody>
           </table>
           <Pagination/>
