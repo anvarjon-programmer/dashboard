@@ -32,6 +32,7 @@
 }  
 .user image{
     border-radius: 50%;
+    object-fit: contain;
 } 
 .button{
     padding: 5px 10px;

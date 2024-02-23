@@ -11,6 +11,7 @@ export default function Search({placeholder}:{placeholder:string}) {
   const {replace} = useRouter()
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const params = new URLSearchParams(searchParams);
+  params.set("page",'1')
     params.set("q", e.target.value)
     replace(`${pathname}?${params}`)
   }

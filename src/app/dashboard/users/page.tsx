@@ -5,11 +5,11 @@ import Search from '@/app/ui/dashboard/search/search';
 import Pagination from '../../ui/dashboard/pagination/pagination';
 import Image from 'next/image';
 import { fetchUser } from '@/app/lib/data';
+import { IUserPromise } from '../types/users';
 export default async function Users({searchParams}:{searchParams:{query:string, page:string}}) {
   const q = searchParams?.query || "";
   const page = Number(searchParams?.page) || 1
-  const users = await fetchUser(q,page)
-  console.log(users,'users');
+  const results:IUserPromise | undefined = await fetchUser(q,page)
   
   return (
     <div className={styles.container}>
@@ -34,11 +34,11 @@ export default async function Users({searchParams}:{searchParams:{query:string, 
             </thead>
             <tbody>
               {
-                users?.map((user)=>(
+                results?.users?.map((user)=>(
               <tr key={user._id}>
                 <td>
                   <div className={styles.user}>
-                  <Image src={user.img || "/noavatar.png"} alt='user' width={40} height={40}/>
+                  <Image className={styles.user} src={user.img || "/noavatar.png"} alt='user' width={40} height={40}/>
                   {user?.usernmae}
                   </div>
                 </td>
@@ -59,7 +59,7 @@ export default async function Users({searchParams}:{searchParams:{query:string, 
             }
             </tbody>
           </table>
-          <Pagination count={8}/>
+          <Pagination count={results?.count}/>
     </div>
   )
 }

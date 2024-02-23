@@ -2,7 +2,7 @@
 import React from 'react'
 import styles from './pagination.module.css'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-export default function Pagination({count}:{coun:number}) {
+export default function Pagination({count}:{coun:number | undefined}) {
   const searchParams = useSearchParams();
   const {replace} = useRouter();
   const pathname = usePathname();
