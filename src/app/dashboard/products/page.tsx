@@ -3,7 +3,7 @@ import styles from '@/app/ui/dashboard/products/products.module.css'
 import Search from '@/app/ui/dashboard/search/search'
 import Link from 'next/link'
 import Image from 'next/image'
-import Pagination from '../pagination/pagination'
+import Pagination from '../../ui/dashboard/pagination/pagination'
 export default function Products() {
   return (
     <div className={styles.container}>

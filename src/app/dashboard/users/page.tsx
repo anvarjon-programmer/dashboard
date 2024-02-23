@@ -2,13 +2,15 @@ import React from 'react'
 import styles from "@/app/ui/dashboard/users/users.module.css"
 import Link from 'next/link'
 import Search from '@/app/ui/dashboard/search/search';
-import Pagination from '../pagination/pagination';
+import Pagination from '../../ui/dashboard/pagination/pagination';
 import Image from 'next/image';
 import { fetchUser } from '@/app/lib/data';
-export default async function Users({searchParams}:{searchParams:{q:string}}) {
-  const q = searchParams?.q || ""
-  const users = await fetchUser(q)
-  console.log(users);
+export default async function Users({searchParams}:{searchParams:{query:string, page:string}}) {
+  const q = searchParams?.query || "";
+  const page = Number(searchParams?.page) || 1
+  const users = await fetchUser(q,page)
+  console.log(users,'users');
+  
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -57,7 +59,7 @@ export default async function Users({searchParams}:{searchParams:{q:string}}) {
             }
             </tbody>
           </table>
-          <Pagination/>
+          <Pagination count={8}/>
     </div>
   )
 }
