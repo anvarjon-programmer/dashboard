@@ -12,7 +12,7 @@ export default function Search({placeholder}:{placeholder:string}) {
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const params = new URLSearchParams(searchParams);
   params.set("page",'1')
-    params.set("q", e.target.value)
+    params.set("query", e.target.value)
     replace(`${pathname}?${params}`)
   }
   return (

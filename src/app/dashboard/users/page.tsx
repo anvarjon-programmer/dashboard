@@ -38,8 +38,8 @@ export default async function Users({searchParams}:{searchParams:{query:string, 
               <tr key={user._id}>
                 <td>
                   <div className={styles.user}>
-                  <Image className={styles.user} src={user.img || "/noavatar.png"} alt='user' width={40} height={40}/>
-                  {user?.usernmae}
+                  <Image className={styles.userImage} src={user.img || "/noavatar.png"} alt='user' width={40} height={40}/>
+                  {user?.username}
                   </div>
                 </td>
                 <td>{user.email}</td>

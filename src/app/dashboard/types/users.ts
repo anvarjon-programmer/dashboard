@@ -1,6 +1,4 @@
-import { create } from "domain"
-
-interFace IUsers {
+interface IUsers {
     username:string,
     _id:string,
     email:string,
@@ -15,3 +13,4 @@ export interface IUserPromise{
     count:number,
     users:IUsers[]
 }
+

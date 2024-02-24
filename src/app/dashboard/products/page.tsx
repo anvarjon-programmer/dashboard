@@ -4,7 +4,12 @@ import Search from '@/app/ui/dashboard/search/search'
 import Link from 'next/link'
 import Image from 'next/image'
 import Pagination from '@/app/ui/dashboard/pagination/pagination'
-export default function Products() {
+import { fetchProducts } from '@/app/lib/data'
+import { IProductPromise } from '../types/products'
+export default async function Products({searchParams}:{searchParams:{query:string, page:string}}) {
+  const q = searchParams?.query || "";
+  const page = Number(searchParams?.page) || 1
+  const results:IProductPromise | undefined = await fetchProducts(q,page)
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -26,17 +31,19 @@ export default function Products() {
             </tr>
           </thead>
           <tbody>
-            <tr>
+            {
+              results?.products?.map((product) =>(
+                <tr key={product._id}>
               <td>
                 <div className={styles.product}>
-                  <Image src="/noavatar.png" alt='noavatar' width={40} height={40} className={styles.product}/>
-                  Iphone
+                  <Image src={product.img} alt='noavatar' width={40} height={40} className={styles.product}/>
+                  {product.title}
                 </div>
               </td>
-              <td>Description</td>
-              <td>$12000</td>
-              <td>12.02.2024</td>
-              <td>33</td>
+              <td>{product.desc}</td>
+              <td>${product.price}</td>
+              <td>{product?.createdAt?.toString()?.slice(4,16)}</td>
+              <td>{product.stock}</td>
               <td>
                 <div className={styles.buttons}>
                   <Link href='/dashboard/products/test'>
@@ -46,9 +53,11 @@ export default function Products() {
                 </div>
               </td>
             </tr>
+              ))
+            }
           </tbody>
         </table>
-        <Pagination/>
+        <Pagination count={results?.count}/>
     </div>
   )
 }

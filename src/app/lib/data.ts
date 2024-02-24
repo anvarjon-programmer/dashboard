@@ -2,6 +2,7 @@ import { pages } from "next/dist/build/templates/app-page";
 import {Product, User} from "./models";
 import{connectToDB} from './utels';
 import { IUserPromise } from "../dashboard/types/users";
+import { IProductPromise } from "../dashboard/types/products";
 // import{IProductPromise} from "../types/products"
 
 
@@ -18,14 +19,14 @@ export const fetchUser = async(q:string,page:number):Promise<IUserPromise | unde
         
     }
 }
-export const fetchProducts = async(q:string,page:number):Promise<IUserPromise | undefined>=>{
+export const fetchProducts = async(q:string,page:number):Promise<IProductPromise | undefined>=>{
     const regex = new RegExp(q, "i")
     const ITEM_PER_PAGE = 2;
     try{
         connectToDB()
         const count = await Product.find({title:{$regex: regex}}).countDocuments()
-        const users = await Product.find({title:{$regex: regex}}).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page - 1))
-        return {count,users}
+        const products = await Product.find({title:{$regex: regex}}).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page - 1))
+        return {count, products}
     }catch(error){
         console.log(error);
         
