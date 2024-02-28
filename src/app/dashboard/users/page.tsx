@@ -6,11 +6,12 @@ import Pagination from '../../ui/dashboard/pagination/pagination';
 import Image from 'next/image';
 import { fetchUser } from '@/app/lib/data';
 import { IUserPromise } from '../types/users';
+import { deleteUser } from '@/app/lib/usersAction';
 export default async function Users({searchParams}:{searchParams:{query:string, page:string}}) {
   const q = searchParams?.query || "";
   const page = Number(searchParams?.page) || 1
   const results:IUserPromise | undefined = await fetchUser(q,page)
-  
+  console.log(results);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -51,7 +52,10 @@ export default async function Users({searchParams}:{searchParams:{query:string, 
                     <Link href={`/dashboard/users/${user._id}`}>
                       <button className={`${styles.button} ${styles.view}`}>view</button>
                     </Link>
-                    <button className={`${styles.button} ${styles.delete}`}>delet</button>
+                     <form action={deleteUser}>
+                      <input type="text" hidden name='id' value={user._id}/>
+                     <button className={`${styles.button} ${styles.delete}`}>delet</button>
+                     </form>
                   </div>
                 </td>
               </tr>

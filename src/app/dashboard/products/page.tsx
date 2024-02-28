@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Pagination from '@/app/ui/dashboard/pagination/pagination'
 import { fetchProducts } from '@/app/lib/data'
 import { IProductPromise } from '../types/products'
+import { deleteProduct } from '@/app/lib/productsAction'
 export default async function Products({searchParams}:{searchParams:{query:string, page:string}}) {
   const q = searchParams?.query || "";
   const page = Number(searchParams?.page) || 1
@@ -46,10 +47,13 @@ export default async function Products({searchParams}:{searchParams:{query:strin
               <td>{product.stock}</td>
               <td>
                 <div className={styles.buttons}>
-                  <Link href='/dashboard/products/test'>
+                  <Link href={`/dashboard/products/${product?.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>View</button>
                   </Link>
-                  <button className={`${styles.button} ${styles.delete}`}>Delete</button>
+                   <form action={deleteProduct}>
+                    <input type="text" hidden name='id' value={product._id} />
+                   <button className={`${styles.button} ${styles.delete}`}>Delete</button>
+                   </form>
                 </div>
               </td>
             </tr>

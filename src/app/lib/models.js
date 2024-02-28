@@ -13,10 +13,12 @@ const userSchema = new mongoose.Schema(
             type:String,
             required:true,
             unique:true,
+            default:"ayubxonrahimov@gmail.com"
         },
         password:{
             type:String,
             required:true,
+            default:"12345"
         },
         img:{
             type:String
@@ -30,10 +32,11 @@ const userSchema = new mongoose.Schema(
             default:true
         },
         phone:{
-            type:String
+            type:String 
         },
         address:{
-            type:String
+            type:String,
+            default:"Uzbekiston"
         }
     },
     {timestamps:true}
@@ -65,7 +68,7 @@ const productSchema = new mongoose.Schema(
         },
          size:{
             type:String
-        }
+        },
     },
     {timestamps:true}
 );

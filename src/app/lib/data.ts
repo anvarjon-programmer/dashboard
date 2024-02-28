@@ -19,6 +19,23 @@ export const fetchUser = async(q:string,page:number):Promise<IUserPromise | unde
         
     }
 }
+
+export const fetchUsers = async(id:string)=>{
+    try{
+        connectToDB()
+        const user = await User.findById(id)
+        return user
+    }catch(error){
+        console.log(error);
+        
+    }
+}
+
+
+
+
+
+
 export const fetchProducts = async(q:string,page:number):Promise<IProductPromise | undefined>=>{
     const regex = new RegExp(q, "i")
     const ITEM_PER_PAGE = 2;
@@ -30,5 +47,16 @@ export const fetchProducts = async(q:string,page:number):Promise<IProductPromise
     }catch(error){
         console.log(error);
         
+    }
+}
+
+
+export const fetchProduct = async(id:string)=>{
+    try{
+        connectToDB()
+        const product = await Product.findById({_id:id})
+        return product
+    }catch(error){
+        console.log(error);
     }
 }
